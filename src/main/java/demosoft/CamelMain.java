@@ -15,6 +15,10 @@ public final class CamelMain {
 
             String amqpUri = camel.resolvePropertyPlaceholders("{{quarkus.qpid-jms.url}}");
             ConnectionFactory factory = new JmsConnectionFactory(amqpUri);
+
+            // This makes connections cached.
+            //org.springframework.jms.connection.CachingConnectionFactory factory = new CachingConnectionFactory(new JmsConnectionFactory(amqpUri));
+
             camel.addComponent("amqp", new AMQPComponent(factory));
             camel.addRoutes(new DemoRouteBuilder());
 

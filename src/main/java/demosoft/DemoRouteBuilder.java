@@ -22,7 +22,7 @@ public class DemoRouteBuilder extends RouteBuilder {
                 .log("message sent to queue ${body}")
         ;
 
-        from(amqp("queue:{{queue.name}}?cacheLevelName=CACHE_CONSUMER&acknowledgementModeName=CLIENT_ACKNOWLEDGE").transacted(true).getUri())
+        from(amqp("queue:{{queue.name}}").transacted(true).getUri())
                 .routeId("amqp-redelivery-route")
                 .to("log:info?showHeaders=true")
                 .choice()
